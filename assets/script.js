@@ -12,84 +12,126 @@ const currentHour = [
         hour: '08',
         time: '08',
         meridiem: 'am',
-        reminder: ''
+        events: ''
     },
     {
         id: '1',
         hour: '09',
         time: '09',
         meridiem: 'am',
-        reminder: ''
+        events: ''
     },
     {
         id: '2',
         hour: '10',
         time: '10',
         meridiem: 'am',
-        reminder: ''
+        events: ''
     },
     {
         id: '3',
         hour: '11',
         time: '11',
         meridiem: 'am',
-        reminder: ''
+        events: ''
     },
     {
         id: '4',
         hour: '12',
         time: '12',
         meridiem: 'pm',
-        reminder: ''
+        events: ''
     },
     {
         id: '5',
         hour: '01',
         time: '13',
         meridiem: 'pm',
-        reminder: ''
+        events: ''
     },
     {
         id: '6',
         hour: '02',
         time: '14',
         meridiem: 'pm',
-        reminder: ''
+        events: ''
     },
     {
         id: '7',
         hour: '03',
         time: '15',
         meridiem: 'pm',
-        reminder: ''
+        events: ''
     },
     {
         id: '8',
         hour: '04',
         time: '16',
         meridiem: 'pm',
-        reminder: ''
+        events: ''
     },
     {
         id: '9',
         hour: '05',
         time: '17',
         meridiem: 'pm',
-        reminder: ''
+        events: ''
     },
 ]
 
+
+function saveEvents() {
+    localStorage.setItem("currentHour", JSON.stringify(currentHour));
+}
+
+function displayEvents() {
+    currentHour.forEach(function(_theHour){
+        $(`#${_theHour.id}`).val(_theHour.events);
+    })
+}
 currentHour.forEach(function(theHour) {
-    const hourRow = $("<form>").attr({
+    let hourRow = $("<form>").attr({
         "class": "row"
     });
     $(".container").append(hourRow);
 });
+function init(){
+    let storedDay = JSON.parse(localStorage.getIem("currenHour"));
+    if (storedDay){
+        currentHour = storedDay;
+    }
+    saveEvents();
+    displayEvents();
+}
 
 const hourBox = $("<div>")
     .text(`${theHour.hour}${theHour.meridiem}`)
     .attr({
         "class": "col-md-2 hour"
     });
-    
+
+const hourInfo = $("<div>")
+    .attr({
+        "class": "col-md-9 description p-0"
+    });
+
+const planner = $("<textarea>");
+hourInfo.append(planner);
+planner.attr("id", theHour.id);
+if (theHour.time < moment().format("HH")){
+    planner.attr ({
+        "class": "past",
+    })
+} else if (theHour.time === moment().format("HH")) {
+    planner.attr({
+        "class": "present"
+    })
+} else if (theHour.time > moment().format("HH")) {
+    planner.attr({
+        "class": "future"
+    })
+}
+
+
+
 
