@@ -86,3 +86,10 @@ currentHour.forEach(function(theHour) {
     $(".container").append(hourRow);
 });
 
+const hourBox = $("<div>")
+    .text(`${theHour.hour}${theHour.meridiem}`)
+    .attr({
+        "class": "col-md-2 hour"
+    });
+    
+
