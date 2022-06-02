@@ -82,27 +82,27 @@ const currentHour = [
 
 function saveEvents() {
     localStorage.setItem("currentHour", JSON.stringify(currentHour));
-}
+};
 
 function displayEvents() {
     currentHour.forEach(function(_theHour){
         $(`#${_theHour.id}`).val(_theHour.events);
     })
 }
-currentHour.forEach(function(theHour) {
-    let hourRow = $("<form>").attr({
-        "class": "row"
-    });
-    $(".container").append(hourRow);
-});
 function init(){
-    let storedDay = JSON.parse(localStorage.getIem("currenHour"));
+    let storedDay = JSON.parse(localStorage.getIem("currentHour"));
     if (storedDay){
         currentHour = storedDay;
     }
     saveEvents();
     displayEvents();
 }
+currentHour.forEach(function(theHour){
+        let hourRow = $("<form>").attr({
+            "class": "row"
+        });
+        $(".container").append(hourRow);
+    });
 
 const hourBox = $("<div>")
     .text(`${theHour.hour}${theHour.meridiem}`)
@@ -131,6 +131,20 @@ if (theHour.time < moment().format("HH")){
         "class": "future"
     })
 }
+
+const saveButton = $("<i class='far fa-save fa-lg'></i>")
+const savePlan = $("<button>")
+.attr({
+    "class": "col-md-1 saveBtn"
+});
+
+savePlan.append(saveButton);
+hourRow.append(hourBox, HourInfo, savePlan);
+
+init();
+
+
+
 
 
 
