@@ -85,64 +85,68 @@ function saveEvents() {
 };
 
 function displayEvents() {
-    currentHour.forEach(function(_theHour){
+    currentHour.forEach(function (_theHour) {
         $(`#${_theHour.id}`).val(_theHour.events);
     })
 }
-function init(){
+function init() {
     let storedDay = JSON.parse(localStorage.getIem("currentHour"));
-    if (storedDay){
+    if (storedDay) {
         currentHour = storedDay;
     }
     saveEvents();
     displayEvents();
 }
-currentHour.forEach(function(theHour){
-        let hourRow = $("<form>").attr({
-            "class": "row"
+currentHour.forEach(function (theHour) {
+    const hourRow = $("<form>").attr({
+        "class": "row"
+    });
+    $(".container").append(hourRow);
+
+
+    const hourBox = $("<div>")
+        .text(`${theHour.hour}${theHour.meridiem}`)
+        .attr({
+            "class": "col-md-2 hour"
         });
-        $(".container").append(hourRow);
-    });
 
-const hourBox = $("<div>")
-    .text(`${theHour.hour}${theHour.meridiem}`)
-    .attr({
-        "class": "col-md-2 hour"
-    });
+    const hourInfo = $("<div>")
+        .attr({
+            "class": "col-md-9 description p-0"
+        });
 
-const hourInfo = $("<div>")
-    .attr({
-        "class": "col-md-9 description p-0"
-    });
+    const planner = $("<textarea>");
+    hourInfo.append(planner);
+    planner.attr("id", theHour.id);
+    if (theHour.time < moment().format("HH")) {
+        planner.attr({
+            "class": "past",
+        })
+    } else if (theHour.time === moment().format("HH")) {
+        planner.attr({
+            "class": "present"
+        })
+    } else if (theHour.time > moment().format("HH")) {
+        planner.attr({
+            "class": "future"
+        })
+    }
 
-const planner = $("<textarea>");
-hourInfo.append(planner);
-planner.attr("id", theHour.id);
-if (theHour.time < moment().format("HH")){
-    planner.attr ({
-        "class": "past",
-    })
-} else if (theHour.time === moment().format("HH")) {
-    planner.attr({
-        "class": "present"
-    })
-} else if (theHour.time > moment().format("HH")) {
-    planner.attr({
-        "class": "future"
-    })
-}
+    const saveButton = $("<i class='far fa-save fa-lg'></i>")
+    const savePlan = $("<button>")
+        .attr({
+            "class": "col-md-1 saveBtn"
+        });
 
-const saveButton = $("<i class='far fa-save fa-lg'></i>")
-const savePlan = $("<button>")
-.attr({
-    "class": "col-md-1 saveBtn"
-});
-
-savePlan.append(saveButton);
-hourRow.append(hourBox, HourInfo, savePlan);
+    savePlan.append(saveButton);
+    hourRow.append(hourBox, hourInfo, savePlan);
+})
 
 init();
 
+$(".saveBtn").on("click", function(event){
+    event.preventDefault()
+})
 
 
 
