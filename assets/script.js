@@ -9,72 +9,72 @@ $("#currentDay").text(todaysDate);
 const currentHour = [
     {
         id: '0',
-        hour: '08',
+        hour: '8',
         time: '08',
-        meridiem: 'am',
+        meridiem: 'AM',
         events: ''
     },
     {
         id: '1',
-        hour: '09',
+        hour: '9',
         time: '09',
-        meridiem: 'am',
+        meridiem: 'AM',
         events: ''
     },
     {
         id: '2',
         hour: '10',
         time: '10',
-        meridiem: 'am',
+        meridiem: 'AM',
         events: ''
     },
     {
         id: '3',
         hour: '11',
         time: '11',
-        meridiem: 'am',
+        meridiem: 'AM',
         events: ''
     },
     {
         id: '4',
         hour: '12',
         time: '12',
-        meridiem: 'pm',
+        meridiem: 'PM',
         events: ''
     },
     {
         id: '5',
-        hour: '01',
+        hour: '1',
         time: '13',
-        meridiem: 'pm',
+        meridiem: 'PM',
         events: ''
     },
     {
         id: '6',
-        hour: '02',
+        hour: '2',
         time: '14',
-        meridiem: 'pm',
+        meridiem: 'PM',
         events: ''
     },
     {
         id: '7',
-        hour: '03',
+        hour: '3',
         time: '15',
-        meridiem: 'pm',
+        meridiem: 'PM',
         events: ''
     },
     {
         id: '8',
-        hour: '04',
+        hour: '4',
         time: '16',
-        meridiem: 'pm',
+        meridiem: 'PM',
         events: ''
     },
     {
         id: '9',
-        hour: '05',
+        hour: '5',
         time: '17',
-        meridiem: 'pm',
+        meridiem: 'PM',
         events: ''
     },
 ]
@@ -90,9 +90,9 @@ function displayEvents() {
     })
 }
 function init() {
-    let storedDay = JSON.parse(localStorage.getIem("currentHour"));
+    var storedDay = JSON.parse(localStorage.getItem("currentHour"));
     if (storedDay) {
-        currentHour = storedDay;
+        currentHour === storedDay;
     }
     saveEvents();
     displayEvents();
@@ -144,9 +144,10 @@ currentHour.forEach(function (theHour) {
 
 init();
 
-$(".saveBtn").on("click", function(event){
-    event.preventDefault()
+$("#saveBtn").on("click", function(event){
+    event.preventDefault();
 })
+
 
 
 
