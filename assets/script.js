@@ -3,10 +3,7 @@ const todaysDate = moment().format("dddd, MMMM Do YYYY, h:mm a");
 $("#currentDay").text(todaysDate);
 
 //Build out calendar function
-//check for current time, and highlight the corresponding timeblock with present color
-//highlight past and future timeblocks with corresponding colors
-//create variable to store time blocks
-const currentHour = [
+let currentHour = [
     {
         id: '0',
         hour: '8',
@@ -85,14 +82,14 @@ function saveEvents() {
 };
 
 function displayEvents() {
-    currentHour.forEach(function (_theHour) {
-        $(`#${_theHour.id}`).val(_theHour.events);
+    currentHour.forEach(function (theHour) {
+        $(`#${theHour.id}`).val(theHour.events);
     })
 }
 function init() {
-    var storedDay = JSON.parse(localStorage.getItem("currentHour"));
+    const storedDay = JSON.parse(localStorage.getItem("currentHour"));
     if (storedDay) {
-        currentHour === storedDay;
+        currentHour = storedDay;
     }
     saveEvents();
     displayEvents();
@@ -117,6 +114,8 @@ currentHour.forEach(function (theHour) {
 
     const planner = $("<textarea>");
     hourInfo.append(planner);
+    planner.css("width","100%");
+    planner.css("height","100%");
     planner.attr("id", theHour.id);
     if (theHour.time < moment().format("HH")) {
         planner.attr({
@@ -140,17 +139,16 @@ currentHour.forEach(function (theHour) {
 
     savePlan.append(saveButton);
     hourRow.append(hourBox, hourInfo, savePlan);
+    savePlan.on("click", function(e){
+        e.preventDefault();
+        const saveIndex = $(this).siblings(".description").children().attr("id");
+        currentHour[saveIndex].events = $(this).siblings(".description").children().val();
+        console.log(currentHour[saveIndex].events);
+        saveEvents();
+        displayEvents();
+    })
 })
 
 init();
-
-$("#saveBtn").on("click", function(event){
-    event.preventDefault();
-})
-
-
-
-
-
 
 
